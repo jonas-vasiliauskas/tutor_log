@@ -1,7 +1,22 @@
-function App() {
-    const userLogIn = (e: any) => {
+import { /*useState,useEffect*/ } from "react";
+import axios from 'axios';
+
+
+export default function App() {
+  
+    function userLogIn(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-    };
+        const formData = new FormData(e.currentTarget);
+        const emailValue = formData.get("email");
+        const passwordValue = formData.get("password");
+        
+        axios.post("api/auth/login", {email:emailValue, password:passwordValue })
+            .then((response) => {
+             console.log("Sekmingai prisijungete", response.data);})
+            .catch((error) => {
+            console.error("Prisijungimo klaida", error);
+        });
+    }
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -19,7 +34,8 @@ function App() {
                     Praktiniai kursai pradedantiesiems, sukurti tam, kad išmoktum
                     realių įgūdžių ir pasiruoštum darbo rinkai.
                 </p>
-                <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition">
+                <button className="bg-blue-600 text-white px-6 py-3 
+                    rounded-lg font-semibold hover:bg-green-700 transition">
                     Peržiūrėti kursus
                 </button>
             </section>
@@ -36,21 +52,23 @@ function App() {
                             <label className="block text-sm font-medium mb-1">
                                 El. paštas
                             </label>
-                            <input className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                            <input className="w-full px-4 py-2 border 
+                                rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                id="email" name="email" />
                         </div>
                         <div>
                             <label className="block text-sm font-medium mb-1">
                                 Slaptažodis
                             </label>
                             <input
-                                type="password"
-                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                            />
+                                type="password" id="password" name="password"
+                                className="w-full px-4 py-2 border rounded-lg
+                                    focus:ring-2 focus:ring-blue-500 focus:outline-none"/>
                         </div>
                         <button
                             type="submit"
-                            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition"
-                        >
+                            className="w-full bg-blue-600 text-white py-2 
+                                rounded-lg font-semibold hover:bg-green-700 transition">
                             Prisijungti
                         </button>
                     </form>
@@ -137,7 +155,7 @@ function App() {
                             tinkama kryptimi ir praktika tai tampa pasiekiama
                             kiekvienam.
                         </p>
-                        <a
+                        <a 
                             href="#"
                             className="text-blue-600 font-semibold hover:text-green-700"
                         >
@@ -153,7 +171,5 @@ function App() {
             </footer>
         </div>
     );
-}
-
-export default App;
+} 
 
