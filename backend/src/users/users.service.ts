@@ -9,12 +9,14 @@ export class UsersService {
     {
       userId: 1,
       email: 'vas.jonas@gmail.com',
+      //password: '$2b$16$Tpcz/Xhf976vepWiD/8apOdR3w4AYgX5JMhFafC/muQWrV0GXnrDK',
       password: 'msmsms',
     },
     {
       userId: 2,
       username: 'testas@testas.lt',
-      password: 'labas',
+     // password: '$2b$16$os3hrfef1cKQ6QuIzJAfg.EuEYAW4KTLweKsBQSztmamkETJ2E0Oa',
+     password: 'labas',
     },
   ];
 
