@@ -10,6 +10,7 @@ export default function App() {
         const emailValue = formData.get("email");
         const passwordValue = formData.get("password");
         
+        console.log("userLogIn emailValue: ",emailValue," passwordValue: ", passwordValue);
         axios.post("/api/auth/login", {email:emailValue, password:passwordValue })
             .then((response) => {
              console.log("Sekmingai prisijungete", response.data);})
