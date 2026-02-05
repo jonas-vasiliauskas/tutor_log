@@ -10,17 +10,16 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  
   async signIn(eMail: string, pass: string) {
     const bcrypt = require('bcrypt');
-    console.log("AuthService.signIn(string,string): eMail = "+eMail+" pass "+pass);
     const userPassword = await this.usersService.findByEmail(eMail);
     
-    /*if (user?.password, pass) 
+    const isLoggedIn = await bcrypt.compare(pass,userPassword);
+   
+    if(!isLoggedIn)
         throw new UnauthorizedException();
-    if(!bcrypt.compare(userPassword, pass))
-        throw new UnauthorizedException();*/
         
-    //const payload = { username: user.username, sub: user.userId };
     const payload = {email: eMail};
     return {
       access_token: await this.jwtService.signAsync(payload),

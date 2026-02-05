@@ -1,16 +1,14 @@
 import { /*useState,useEffect*/ } from "react";
 import axios from 'axios';
 
-
 export default function App() {
   
     function userLogIn(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        const emailValue = formData.get("email");
-        const passwordValue = formData.get("password");
+        const emailValue = formData.get("email")?.toString() || "";
+        const passwordValue = formData.get("password")?.toString() || "";
         
-        console.log("userLogIn emailValue: ",emailValue," passwordValue: ", passwordValue);
         axios.post("/api/auth/login", {email:emailValue, password:passwordValue })
             .then((response) => {
              console.log("Sekmingai prisijungete", response.data);})
