@@ -1,7 +1,10 @@
-import { /*useState,useEffect*/ } from "react";
+import { useState/*,useEffect*/ } from "react";
+import React from 'react';
 import axios from 'axios';
 
 export default function App() {
+    const [logInErrorMsg, setLogInErrorMsg] = useState("");
+    const [userLoggedInMsg,setUserLoggedInMsg] = useState("");
   
     function userLogIn(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -9,12 +12,15 @@ export default function App() {
         const emailValue = formData.get("email")?.toString() || "";
         const passwordValue = formData.get("password")?.toString() || "";
         
-        axios.post("/api/auth/login", {email:emailValue, password:passwordValue })
-            .then((response) => {
-             console.log("Sekmingai prisijungete", response.data);})
-            .catch((error) => {
-            console.error("Prisijungimo klaida", error);
-        });
+        axios.post("/api/auth/login", {email:emailValue, password:passwordValue})
+            .then(() => {
+                setUserLoggedInMsg("Sėkmingai prisijungėte");
+                setTimeout(() => {setUserLoggedInMsg("");},5000);
+            }) 
+            .catch(() => {
+                setLogInErrorMsg("Prisijungimo klaida");
+                setTimeout(() => {setLogInErrorMsg("");}, 5000);
+           });
     }
 
     return (
@@ -64,12 +70,16 @@ export default function App() {
                                 className="w-full px-4 py-2 border rounded-lg
                                     focus:ring-2 focus:ring-blue-500 focus:outline-none"/>
                         </div>
-                        <button
-                            type="submit"
-                            className="w-full bg-blue-600 text-white py-2 
+                        <div>
+                            <button
+                                type="submit"
+                                className="w-full bg-blue-600 text-white py-2 
                                 rounded-lg font-semibold hover:bg-green-700 transition">
-                            Prisijungti
-                        </button>
+                                Prisijungti
+                            </button>
+                            <p className="login_form_error_msg text-red-600">{logInErrorMsg}</p>
+                            <p className="user_login_msg text-green-600">{userLoggedInMsg}</p>
+                        </div>
                     </form>
                 </div>
 
