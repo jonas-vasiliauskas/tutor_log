@@ -9,7 +9,9 @@ export class UsersService {
 
     async findByEmail(email: string):Promise<string> {
         const { rows } = await this.pool.query('SELECT password FROM "user" WHERE email = $1 LIMIT 1',[email]);
-        return rows[0]['password']??null;
+        if (rows[0]===undefined)
+            return '';
+        return rows[0]['password']??'';
     }
 }
 

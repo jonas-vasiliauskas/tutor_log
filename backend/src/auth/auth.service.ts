@@ -15,6 +15,9 @@ export class AuthService {
     const bcrypt = require('bcrypt');
     const userPassword = await this.usersService.findByEmail(eMail);
     
+    if (userPassword===null)
+        throw new UnauthorizedException();
+        
     const isLoggedIn = await bcrypt.compare(pass,userPassword);
    
     if(!isLoggedIn)
