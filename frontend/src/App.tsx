@@ -5,6 +5,14 @@ import axios from 'axios';
 export default function App() {
     const [logInErrorMsg, setLogInErrorMsg] = useState("");
     const [userLoggedInMsg,setUserLoggedInMsg] = useState("");
+    const [emailValue,setEmailValue] = useState("");
+    const [passwordValue,setPasswordValue] = useState("");
+    const [isUserLoggedIn, logUserIn] = useState(false);
+    
+    function clearLoginForm(){
+         setEmailValue("");
+         setPasswordValue("");
+    }
   
     function userLogIn(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -15,12 +23,19 @@ export default function App() {
         axios.post("/api/auth/login", {email:emailValue, password:passwordValue})
             .then(() => {
                 setUserLoggedInMsg("Sėkmingai prisijungėte");
-                setTimeout(() => {setUserLoggedInMsg("");},5000);
+                setTimeout(() => {
+                    logUserIn(true);
+                    setTimeout(() => {
+                        setUserLoggedInMsg("");
+                        clearLoginForm();
+                    }, 5000);
+                }, 5000);
             }) 
             .catch(() => {
                 setLogInErrorMsg("Prisijungimo klaida");
-                setTimeout(() => {setLogInErrorMsg("");}, 5000);
+                setTimeout(() => {setLogInErrorMsg("");clearLoginForm()}, 5000);
            });
+          
     }
 
     return (
@@ -48,6 +63,7 @@ export default function App() {
             {/* Main content */}
             <main className="flex flex-col md:flex-row gap-8 px-6 py-12 flex-1">
                 {/* Login */}
+                {!isUserLoggedIn && (
                 <div className="w-full md:w-1/4 bg-white rounded-xl shadow p-6">
                     <h3 className="text-xl font-semibold mb-6 text-center">
                         Prisijungimas
@@ -59,14 +75,16 @@ export default function App() {
                             </label>
                             <input className="w-full px-4 py-2 border 
                                 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                                id="email" name="email" />
+                                id="email" name="email" value={emailValue}
+                                onChange={(e) => setEmailValue(e.target.value)}/>
                         </div>
                         <div>
                             <label className="block text-sm font-medium mb-1">
                                 Slaptažodis
                             </label>
                             <input
-                                type="password" id="password" name="password"
+                                type="password" id="password" name="password" value={passwordValue}
+                                onChange={(e) => setPasswordValue(e.target.value)}
                                 className="w-full px-4 py-2 border rounded-lg
                                     focus:ring-2 focus:ring-blue-500 focus:outline-none"/>
                         </div>
@@ -81,8 +99,8 @@ export default function App() {
                             <p className="user_login_msg text-green-600">{userLoggedInMsg}</p>
                         </div>
                     </form>
-                </div>
-
+                </div>)}
+                
                 {/* Content */}
                 <div className="flex-1 space-y-12">
                     {/* Courses */}
