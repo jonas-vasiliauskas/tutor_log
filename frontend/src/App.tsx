@@ -63,7 +63,7 @@ export default function App() {
             {/* Main content */}
             <main className="flex flex-col md:flex-row gap-8 px-6 py-12 flex-1">
                 {/* Login */}
-                {!isUserLoggedIn && (
+                {!isUserLoggedIn ? (
                 <div className="w-full md:w-1/4 bg-white rounded-xl shadow p-6">
                     <h3 className="text-xl font-semibold mb-6 text-center">
                         Prisijungimas
@@ -99,7 +99,13 @@ export default function App() {
                             <p className="user_login_msg text-green-600">{userLoggedInMsg}</p>
                         </div>
                     </form>
+                </div>):
+                (<div className="w-full md:w-1/5 bg-white rounded-xl shadow p-6">
+                     <h3 className="text-xl font-semibold mb-6 text-center">
+                        Vartotojo sritis
+                    </h3>
                 </div>)}
+               
                 
                 {/* Content */}
                 <div className="flex-1 space-y-12">
