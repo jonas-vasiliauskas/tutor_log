@@ -158,7 +158,7 @@ export default function App() {
                         <h3 className="text-xl font-bold mb-6">
                             Rekomenduojami vaizdo įrašai
                         </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                       {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div className="aspect-video">
                                 <iframe
                                     className="w-full h-full rounded-xl"
@@ -175,7 +175,7 @@ export default function App() {
                                     allowFullScreen
                                 />
                             </div>
-                        </div>
+                        </div>*/}
                     </section>
 
                     {/* Article */}
